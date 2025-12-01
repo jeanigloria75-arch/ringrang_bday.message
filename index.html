@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Birthday Surprise</title>
+  <style>
+    body {
+      margin:0; background:#fef6f6; overflow:hidden;
+      display:flex; justify-content:center; align-items:center;
+      min-height:100vh; font-family:sans-serif;
+    }
+    .hidden { opacity:0; transition:opacity 2s ease-in; }
+    .visible { opacity:1; }
+
+    /* Flowers */
+    .flower {
+      position:absolute; width:40px; height:40px;
+      background:radial-gradient(circle at center, #ffb703 40%, #fb8500 100%);
+      border-radius:50%; transition:transform 0.5s ease;
+    }
+    .flower:hover {
+      transform:scale(1.8) rotate(360deg);
+    }
+
+    /* Cake */
+    .cake {
+      width:120px; height:80px; background:#8d99ae;
+      margin:20px auto; border-radius:10px; position:relative;
+    }
+    .cake::before {
+      content:""; position:absolute; top:-20px; left:50%;
+      transform:translateX(-50%);
+      width:20px; height:20px; background:#ff006e;
+      border-radius:50%; animation:candle 1s infinite alternate;
+    }
+    @keyframes candle {
+      from { background:#ffbe0b; }
+      to { background:#fb5607; }
+    }
+
+    /* Balloons */
+    .balloon {
+      position:absolute; width:50px; height:70px;
+      background:radial-gradient(circle at 30% 30%, #ff006e, #d00000);
+      border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;
+      cursor:pointer;
+      animation:rise 8s ease-in forwards;
+    }
+    @keyframes rise {
+      0% { bottom:-100px; opacity:1; }
+      80% { bottom:100vh; opacity:1; }
+      100% { bottom:110vh; opacity:0; }
+    }
+
+    /* Message */
+    .message {
+      position:absolute; text-align:center;
+      background:#fff; padding:2rem; border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,.2);
+    }
+    h1 { font-size:2.5rem; margin-bottom:1rem; color:#e63946; }
+    p { font-size:1.2rem; margin:.5rem 0; }
+  </style>
+</head>
+<body>
+  <!-- Flowers -->
+  <div class="flower" style="left:10%; bottom:0;"></div>
+  <div class="flower" style="left:80%; bottom:0;"></div>
+
+  <!-- Balloons -->
+  <div class="balloon" style="left:20%; bottom:0;"></div>
+  <div class="balloon" style="left:60%; bottom:0;"></div>
+  <div class="balloon" style="left:40%; bottom:0;"></div>
+
+  <!-- Cake -->
+  <div class="cake" style="position:absolute; bottom:20%; left:50%; transform:translateX(-50%);"></div>
+
+  <!-- Hidden Message -->
+  <div id="msg" class="message hidden">
+    <h1>🎉 Happy Birthday, Jean!</h1>
+    <p>Wishing you joy, laughter, and sweet surprises!</p>
+  </div>
+
+  <script>
+    // Balloon popping interaction
+    document.querySelectorAll('.balloon').forEach(balloon => {
+      balloon.addEventListener('click', () => {
+        balloon.style.transition = 'transform 0.3s, opacity 0.3s';
+        balloon.style.transform = 'scale(0)';
+        balloon.style.opacity = '0';
+        // Optional: play pop sound
+        // new Audio('pop.mp3').play();
+      });
+    });
+
+    // Reveal message after 8 seconds
+    setTimeout(() => {
+      document.getElementById("msg").classList.add("visible");
+    }, 8000);
+  </script>
+</body>
+</html>
